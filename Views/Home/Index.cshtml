@@ -51,19 +51,40 @@
         }
 
     </tbody>
-    <tfoot>
-        <tr>
-            <td class="pt-4">
+</table>
+<div>
                 <form method="post" asp-action="AddItem" id="addItem">
                     <input type="hidden" asp-for="ShowComplete"/>
                     <input name="task" placeholder="Enter new to do" class="form-control" />
                 </form>
-            </td>
-            <td class="text-center pt-4">
                 <button type="submit" form="addItem" class="btn btn-sm btn-secondary">
                     Add
-                </button>
-            </td>
-        </tr>
-     </tfoot>
-</table>
+    </button>
+</div>
+
+
+<!-- Pagination Controls -->
+<div class="d-flex justify-content-end">
+    <nav>
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
